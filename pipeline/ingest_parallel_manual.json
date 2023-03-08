@@ -1,0 +1,131 @@
+{
+	"name": "ingest_parallel_manual",
+	"properties": {
+		"activities": [
+			{
+				"name": "getCategories",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "select distinct productCategoryID from SalesLt.Product",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "ds_sql_db_01",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema": "\"\"",
+							"tbname": "\"\""
+						}
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "ingestion_parallel",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "getCategories",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('getCategories').output.value",
+						"type": "Expression"
+					},
+					"batchCount": 4,
+					"activities": [
+						{
+							"name": "Copy data1",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"sqlReaderQuery": {
+										"value": "select * from SalesLt.Product where productCategoryID = @{item().productCategoryID}",
+										"type": "Expression"
+									},
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "ParquetSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "ParquetWriteSettings"
+									}
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "ds_sql_db_01",
+									"type": "DatasetReference",
+									"parameters": {
+										"schema": "\"\"",
+										"tbname": "\"\""
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "ds_adls_learning",
+									"type": "DatasetReference",
+									"parameters": {
+										"container": "bronze",
+										"path": "SalesLT/Product_Manual",
+										"fileName": {
+											"value": "file_category_@{item().productCategoryID}.parquet",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2023-03-07T21:38:51Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

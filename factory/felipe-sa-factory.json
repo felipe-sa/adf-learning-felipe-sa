@@ -1,0 +1,9 @@
+{
+	"name": "felipe-sa-factory",
+	"location": "brazilsouth",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "1212c5a1-e4d5-4b48-943e-29012cb7661a",
+		"tenantId": "ce28d99f-df4e-40c6-9341-d7ed0f008279"
+	}
+}

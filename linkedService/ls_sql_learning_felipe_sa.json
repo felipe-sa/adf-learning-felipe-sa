@@ -1,0 +1,19 @@
+{
+	"name": "ls_sql_learning_felipe_sa",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"connectionString": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=server-learning-felipe.database.windows.net;Initial Catalog=db-learning-felipe;User ID=felipe-sa",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "link_vault_felipe",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "sql-felipe-password"
+			}
+		}
+	}
+}
