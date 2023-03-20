@@ -49,7 +49,8 @@
 						"value": "@activity('get_schema').output.value",
 						"type": "Expression"
 					},
-					"batchCount": 4,
+					"isSequential": false,
+					"batchCount": 5,
 					"activities": [
 						{
 							"name": "copy_tables",
