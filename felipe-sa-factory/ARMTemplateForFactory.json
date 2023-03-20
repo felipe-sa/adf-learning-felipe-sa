@@ -16,6 +16,10 @@
 			"metadata": "Secure string for 'connectionString' of 'ls_sql_learning_felipe_sa'",
 			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=server-learning-felipe.database.windows.net;Initial Catalog=db-learning-felipe;User ID=felipe-sa"
 		},
+		"databricks_learning_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'databricks_learning'"
+		},
 		"link_vault_felipe_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://key-learning-felipe.vault.azure.net/"
@@ -27,6 +31,10 @@
 		"ls_sql_db_felipe_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://dllearningfelipe.dfs.core.windows.net/"
+		},
+		"databricks_learning_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0320-175141-t8b006gs"
 		}
 	},
 	"variables": {
@@ -562,6 +570,24 @@
 				"[concat(variables('factoryId'), '/datasets/ds_sql_db_01')]",
 				"[concat(variables('factoryId'), '/datasets/ds_adls_learning')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/databricks_learning')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-5072002155189040.0.azuredatabricks.net",
+					"accessToken": {
+						"type": "SecureString",
+						"value": "[parameters('databricks_learning_accessToken')]"
+					},
+					"existingClusterId": "[parameters('databricks_learning_properties_typeProperties_existingClusterId')]"
+				}
+			},
+			"dependsOn": []
 		}
 	]
 }

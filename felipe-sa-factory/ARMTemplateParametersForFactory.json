@@ -11,6 +11,9 @@
 		"ls_sql_learning_felipe_sa_connectionString": {
 			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=server-learning-felipe.database.windows.net;Initial Catalog=db-learning-felipe;User ID=felipe-sa"
 		},
+		"databricks_learning_accessToken": {
+			"value": ""
+		},
 		"link_vault_felipe_properties_typeProperties_baseUrl": {
 			"value": "https://key-learning-felipe.vault.azure.net/"
 		},
@@ -19,6 +22,9 @@
 		},
 		"ls_sql_db_felipe_properties_typeProperties_url": {
 			"value": "https://dllearningfelipe.dfs.core.windows.net/"
+		},
+		"databricks_learning_properties_typeProperties_existingClusterId": {
+			"value": "0320-175141-t8b006gs"
 		}
 	}
 }

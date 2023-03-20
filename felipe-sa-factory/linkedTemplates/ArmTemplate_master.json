@@ -16,6 +16,10 @@
 			"metadata": "Secure string for 'connectionString' of 'ls_sql_learning_felipe_sa'",
 			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=server-learning-felipe.database.windows.net;Initial Catalog=db-learning-felipe;User ID=felipe-sa"
 		},
+		"databricks_learning_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'databricks_learning'"
+		},
 		"link_vault_felipe_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://key-learning-felipe.vault.azure.net/"
@@ -27,6 +31,10 @@
 		"ls_sql_db_felipe_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://dllearningfelipe.dfs.core.windows.net/"
+		},
+		"databricks_learning_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0320-175141-t8b006gs"
 		},
 		"containerUri": {
 			"type": "string",
@@ -58,6 +66,9 @@
 					"ls_sql_db_felipe_accountKey": {
 						"value": "[parameters('ls_sql_db_felipe_accountKey')]"
 					},
+					"databricks_learning_accessToken": {
+						"value": "[parameters('databricks_learning_accessToken')]"
+					},
 					"ls_sql_learning_felipe_sa_connectionString": {
 						"value": "[parameters('ls_sql_learning_felipe_sa_connectionString')]"
 					},
@@ -69,6 +80,9 @@
 					},
 					"ls_sql_db_felipe_properties_typeProperties_url": {
 						"value": "[parameters('ls_sql_db_felipe_properties_typeProperties_url')]"
+					},
+					"databricks_learning_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('databricks_learning_properties_typeProperties_existingClusterId')]"
 					}
 				}
 			},
