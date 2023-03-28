@@ -133,7 +133,7 @@
 					{
 						"activity": "ingestion",
 						"dependencyConditions": [
-							"Succeeded"
+							"Completed"
 						]
 					}
 				],
